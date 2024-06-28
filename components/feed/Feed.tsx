@@ -1,12 +1,6 @@
 "use client";
-import React, {
-  useCallback,
-  useRef,
-  useEffect,
-  useState,
-  useLayoutEffect,
-} from "react";
-import { FeedPost } from "./FeedPost";
+import React, { useCallback, useRef, useEffect, useState } from "react";
+import { FeedPost } from "@faceit/components/feed-post";
 import { useAppDispatch, useAppSelector } from "@faceit/lib/redux/hooks";
 import {
   useGetPostsQuery,
@@ -19,8 +13,8 @@ import {
   selectFeedData,
 } from "@faceit/lib/redux/slices/feed";
 import socket from "@faceit/lib/socket";
-import { FeedSkeleton } from "./FeedSkeleton";
 import { Spinner } from "@faceit/components/ui/Spinner";
+import { FeedSkeleton } from "./FeedSkeleton";
 
 export const Feed: React.FC = () => {
   const [isConnected, setIsConnected] = useState(socket.connected);
@@ -104,14 +98,7 @@ export const Feed: React.FC = () => {
     [isLoading, isFetching, hasMorePosts, currentPage, dispatch]
   );
 
-  if (isLoading || !users)
-    return (
-      <div>
-        {Array.from(new Array(5)).map((_, index) => (
-          <FeedSkeleton key={index} />
-        ))}
-      </div>
-    );
+  if (isLoading || !users) return <FeedSkeleton />;
   if (error) return <p>Error loading posts</p>;
 
   return (

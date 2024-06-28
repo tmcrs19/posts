@@ -1,4 +1,4 @@
-import { Feed } from "@faceit/components/Feed";
+import { Feed } from "@faceit/components/feed";
 
 export default async function Home() {
   return (
