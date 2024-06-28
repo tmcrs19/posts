@@ -38,6 +38,8 @@ export const Feed: React.FC = () => {
     skip: !users,
   });
 
+  // https://github.com/mahmodghnaj/wrapping-socket-with-nextJs
+  // Potential reusable hook for handling socket connections
   useEffect(() => {
     if (usersSuccess && postsSuccess) {
       const onConnect = () => {
