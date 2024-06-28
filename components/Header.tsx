@@ -12,6 +12,7 @@ export function Header() {
             alt="ESL FACEIT Group Logo"
             width={50}
             height={50}
+            priority
           />
         </Link>
       </div>
