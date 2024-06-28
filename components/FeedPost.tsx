@@ -21,6 +21,7 @@ export const FeedPost: React.FC<IFeedPostProps> = ({
         aria-label={`Avatar of ${username}`}
         role="img"
         className="w-12 h-12 rounded-full bg-gray-400 flex items-center justify-center text-2xl text-white"
+        style={{ minWidth: "50px", minHeight: "50px" }}
       >
         {username[0]}
       </div>

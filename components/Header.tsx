@@ -4,8 +4,8 @@ import Image from "next/image";
 
 export function Header() {
   return (
-    <header className="py-4 md:px-8">
-      <div className="container flex items-center justify-between">
+    <header className="bg-gray-200 text-white py-4 px-6 fixed top-0 w-full z-10">
+      <div className="container flex items-center justify-between mx-auto">
         <Link href="/">
           <Image
             src="/efg-favicon-300x300.png"

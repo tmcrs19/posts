@@ -1,5 +1,11 @@
 "use client";
-import React, { useCallback, useRef, useEffect, useState } from "react";
+import React, {
+  useCallback,
+  useRef,
+  useEffect,
+  useState,
+  useLayoutEffect,
+} from "react";
 import { FeedPost } from "./FeedPost";
 import { useAppDispatch, useAppSelector } from "@faceit/lib/redux/hooks";
 import {
@@ -13,6 +19,8 @@ import {
   selectFeedData,
 } from "@faceit/lib/redux/slices/feed";
 import socket from "@faceit/lib/socket";
+import { FeedSkeleton } from "./FeedSkeleton";
+import { Spinner } from "@faceit/components/ui/Spinner";
 
 export const Feed: React.FC = () => {
   const [isConnected, setIsConnected] = useState(socket.connected);
@@ -96,7 +104,14 @@ export const Feed: React.FC = () => {
     [isLoading, isFetching, hasMorePosts, currentPage, dispatch]
   );
 
-  if (isLoading || !users) return <p>Loading...</p>;
+  if (isLoading || !users)
+    return (
+      <div>
+        {Array.from(new Array(5)).map((_, index) => (
+          <FeedSkeleton key={index} />
+        ))}
+      </div>
+    );
   if (error) return <p>Error loading posts</p>;
 
   return (
@@ -119,7 +134,11 @@ export const Feed: React.FC = () => {
           </Link>
         </li>
       ))}
-      {isFetching && <p>Loading more...</p>}
+      {isFetching && (
+        <div className="flex justify-center items-center mt-4">
+          <Spinner />
+        </div>
+      )}
     </ul>
   );
 };
