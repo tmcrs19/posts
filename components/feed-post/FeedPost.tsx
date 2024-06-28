@@ -6,6 +6,21 @@ export interface IFeedPostProps {
   isHighlighted: boolean;
 }
 
+/* 
+Perhaps this makes more sense.
+|-- components
+    |-- feed
+        |-- Feed.test.tsx
+        |-- Feed.tsx
+        |-- FeedSkeleton.tsx
+        |-- index.tsx
+        |-- feed-post
+            |-- FeedPost.test.tsx
+            |-- FeedPost.tsx
+            |-- FeedPostSkeleton.tsx
+            |-- index.tsx
+*/
+
 export const FeedPost: React.FC<IFeedPostProps> = ({
   username,
   body,
