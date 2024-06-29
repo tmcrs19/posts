@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import StoreProvider from "@faceit/components/StoreProvider";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { WebVitals } from "./_components/web-vitals";
+import StoreProvider from "@faceit/context/StoreProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
