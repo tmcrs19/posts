@@ -14,12 +14,14 @@ export const metadata: Metadata = {
 
 const FeedPreviewLayout: React.FC<FeedPreviewLayoutProps> = ({ children }) => {
   return (
-    <>
-      <Header />
-      <main className="pl-4 pb-16 pt-4 md:pl-32 lg:pl-48 md:pb-0 pr-4 md:pr-8 lg:pr-12">
+    <div className="flex flex-col min-h-screen md:flex-row">
+      <div className="md:w-1/4 lg:w-1/5">
+        <Header />
+      </div>
+      <main className="flex-grow container mx-auto p-4 md:w-3/4 lg:w-4/5">
         {children}
       </main>
-    </>
+    </div>
   );
 };
 

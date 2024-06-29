@@ -29,7 +29,7 @@ const PostPage: React.FC<PostPageProps> = async ({ params }) => {
   }
 
   return (
-    <div className="container max-w-2xl mx-auto py-8">
+    <div className="container">
       <div className="border border-gray-300 p-4 rounded-lg">
         <Link scroll={false} href="/" className="text-xl">
           &lt;
