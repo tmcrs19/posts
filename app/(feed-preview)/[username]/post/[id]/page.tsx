@@ -2,6 +2,7 @@ import React from "react";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { getPost } from "@faceit/lib/server/feed-preview";
+import { FeedPostAppBar } from "@faceit/app/(feed-preview)/app-bar";
 
 interface PostPageProps {
   params: {
@@ -29,27 +30,26 @@ const PostPage: React.FC<PostPageProps> = async ({ params }) => {
   }
 
   return (
-    <div className="container">
-      <div className="border border-gray-300 p-4 rounded-lg">
-        <Link scroll={false} href="/" className="text-xl">
-          &lt;
-        </Link>
-        <div className="flex flex-col items-center mt-4">
+    <>
+      <FeedPostAppBar />
+      <article className="container border-b border-gray-200">
+        <div className="flex items-center mt-4 p-4">
           <div
             aria-label={`Avatar of ${username}`}
             role="img"
-            className="w-24 h-24 rounded-full bg-gray-400 flex items-center justify-center text-3xl text-white"
+            className="w-12 h-12 rounded-full bg-gray-400 flex items-center justify-center text-2xl text-white"
+            style={{ width: "50px", height: "50px" }}
           >
-            {username[0]}
+            {username[0].toUpperCase()}
           </div>
-          <p className="mt-2 text-xl font-bold">{username}</p>
+          <p className="ml-4 text-xl font-bold">{username}</p>{" "}
         </div>
-        <div className="border-t border-gray-300 mt-4 pt-4">
+        <div className="p-4">
           <h2 className="text-xl font-semibold">{post.title}</h2>
           <p className="mt-2">{post.body}</p>
         </div>
-      </div>
-    </div>
+      </article>
+    </>
   );
 };
 

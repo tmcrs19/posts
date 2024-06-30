@@ -6,21 +6,6 @@ export interface IFeedPostProps {
   isHighlighted: boolean;
 }
 
-/* 
-Perhaps this makes more sense.
-|-- components
-    |-- feed
-        |-- Feed.test.tsx
-        |-- Feed.tsx
-        |-- FeedSkeleton.tsx
-        |-- index.tsx
-        |-- feed-post
-            |-- FeedPost.test.tsx
-            |-- FeedPost.tsx
-            |-- FeedPostSkeleton.tsx
-            |-- index.tsx
-*/
-
 export const FeedPost: React.FC<IFeedPostProps> = ({
   username,
   body,
@@ -30,13 +15,13 @@ export const FeedPost: React.FC<IFeedPostProps> = ({
     <article
       className={`${
         isHighlighted ? "bg-yellow-300" : "bg-white"
-      } border border-gray-300 p-4 rounded-lg mb-4 grid grid-cols-[50px_1fr] gap-2 items-center`}
+      } border-b border-gray-200 p-4 grid grid-cols-[50px_1fr] gap-2 items-center`}
     >
       <div
         aria-label={`Avatar of ${username}`}
         role="img"
         className="w-12 h-12 rounded-full bg-gray-400 flex items-center justify-center text-2xl text-white"
-        style={{ minWidth: "50px", minHeight: "50px" }}
+        style={{ minWidth: "25px", minHeight: "25px" }}
       >
         {username[0]}
       </div>

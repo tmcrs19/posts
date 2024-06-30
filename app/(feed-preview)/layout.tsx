@@ -2,6 +2,8 @@ import React from "react";
 import { Metadata } from "next";
 import { metadata as mainLayoutMetaData } from "../(layout-group)/layout";
 import Header from "./header";
+import Sidebar from "./sidebar";
+import { FeedAppBar } from "./app-bar";
 
 type FeedPreviewLayoutProps = {
   children: React.ReactNode;
@@ -14,14 +16,13 @@ export const metadata: Metadata = {
 
 const FeedPreviewLayout: React.FC<FeedPreviewLayoutProps> = ({ children }) => {
   return (
-    <div className="flex flex-col min-h-screen md:flex-row">
-      <div className="md:w-1/4 lg:w-1/5">
-        <Header />
-      </div>
-      <main className="flex-grow container mx-auto p-4 md:w-3/4 lg:w-4/5">
+    <>
+      <Header />
+      <main className="flex flex-col pb-20 md:flex-row flex-grow container md:mr-0 md:pt-11 md:w-5/6 md:ml-auto lg:w-2/4 lg:mx-auto">
         {children}
       </main>
-    </div>
+      <Sidebar />
+    </>
   );
 };
 
