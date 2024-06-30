@@ -4,9 +4,11 @@ import { startAppListening } from "@faceit/store/listenerMiddleware";
 import { IFeedPost, IUser } from "@faceit/lib/server/feed-preview";
 
 interface FeedState {
-  posts: (IFeedPost & Pick<IUser, "username">)[];
+  posts: IFeedPost[];
+  users: IUser[];
   hasMorePosts: boolean;
   currentPage: number;
+  newUserPostNotification: string | null;
 }
 
 interface SetPostsAndUsersPayload {
@@ -14,10 +16,12 @@ interface SetPostsAndUsersPayload {
   users: IUser[];
 }
 
-const initialState: FeedState = {
+export const initialState: FeedState = {
   posts: [],
+  users: [],
   hasMorePosts: true,
   currentPage: 1,
+  newUserPostNotification: null,
 };
 
 export const feedSlice = createSlice({
@@ -26,13 +30,8 @@ export const feedSlice = createSlice({
   reducers: {
     setPostsAndUsers(state, action: PayloadAction<SetPostsAndUsersPayload>) {
       const { posts, users } = action.payload;
-      state.posts = posts.map((post) => {
-        const user = users.find((user) => user.id === post.userId);
-        return {
-          ...post,
-          username: user ? user.username : "Unknown User",
-        };
-      });
+      state.posts = posts;
+      state.users = users;
     },
     setHasMorePosts(state, action: PayloadAction<boolean>) {
       state.hasMorePosts = action.payload;
@@ -40,11 +39,26 @@ export const feedSlice = createSlice({
     setCurrentPage(state, action: PayloadAction<number>) {
       state.currentPage = action.payload;
     },
+    addNewPost(state, action: PayloadAction<IFeedPost>) {
+      const post = action.payload;
+      const user = state.users.find((user) => user.id === post.userId);
+      const username = user ? user.username : "Unknown User";
+      state.posts = [post, ...state.posts];
+      state.newUserPostNotification = username;
+    },
+    clearNewUserPostNotification(state) {
+      state.newUserPostNotification = null;
+    },
   },
 });
 
-export const { setPostsAndUsers, setHasMorePosts, setCurrentPage } =
-  feedSlice.actions;
+export const {
+  setPostsAndUsers,
+  setHasMorePosts,
+  setCurrentPage,
+  addNewPost,
+  clearNewUserPostNotification,
+} = feedSlice.actions;
 export default feedSlice.reducer;
 
 startAppListening({

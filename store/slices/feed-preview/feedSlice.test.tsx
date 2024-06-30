@@ -3,7 +3,7 @@ import { renderWithProviders } from "@faceit/lib/test-utils";
 import { mockUsers, mockFeedPosts } from "@faceit/lib/server/feed-preview";
 import { feedApi } from "@faceit/store/api/feed-preview";
 
-import feedReducer, { setCurrentPage } from "./slice";
+import feedReducer, { setCurrentPage, initialState } from "./slice";
 
 beforeEach(() => {
   fetchMock.resetMocks();
@@ -21,12 +21,6 @@ beforeEach(() => {
 });
 
 describe("feed slice", () => {
-  const initialState = {
-    posts: [],
-    hasMorePosts: true,
-    currentPage: 1,
-  };
-
   it("should handle initial state", () => {
     expect(feedReducer(undefined, { type: "unknown" })).toEqual(initialState);
   });
@@ -43,33 +37,29 @@ describe("feed slice", () => {
     store.dispatch(feedApi.endpoints.getPosts.initiate(1));
 
     await waitFor(() => {
-      expect(store.getState().feed).toStrictEqual({
-        currentPage: 1,
-        hasMorePosts: false,
-        posts: [
-          {
-            body: "This is the body of post 1.",
-            id: 1,
-            title: "Post 1",
-            userId: 1,
-            username: "user1",
-          },
-          {
-            body: "This is the body of post 2.",
-            id: 2,
-            title: "Post 2",
-            userId: 2,
-            username: "user2",
-          },
-          {
-            body: "This is the body of post 3 with unknown user.",
-            id: 3,
-            title: "Post 3",
-            userId: 5,
-            username: "Unknown User",
-          },
-        ],
-      });
+      const state = store.getState().feed;
+      expect(state.currentPage).toEqual(1);
+      expect(state.hasMorePosts).toEqual(false);
+      expect(state.posts).toEqual([
+        {
+          body: "This is the body of post 1.",
+          id: 1,
+          title: "Post 1",
+          userId: 1,
+        },
+        {
+          body: "This is the body of post 2.",
+          id: 2,
+          title: "Post 2",
+          userId: 2,
+        },
+        {
+          body: "This is the body of post 3 with unknown user.",
+          id: 3,
+          title: "Post 3",
+          userId: 5,
+        },
+      ]);
     });
   });
 });
