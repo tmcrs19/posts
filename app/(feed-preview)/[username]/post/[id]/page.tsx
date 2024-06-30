@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import type { Metadata } from "next";
 import { getPost } from "@faceit/lib/server/feed-preview";
 import { FeedPostAppBar } from "@faceit/app/(feed-preview)/app-bar";
