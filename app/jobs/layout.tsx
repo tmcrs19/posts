@@ -4,7 +4,7 @@ import MainLayout, {
   metadata as mainLayoutMetaData,
 } from "../(layout-group)/layout";
 
-type FeedPreviewLayoutProps = {
+type JobsLayoutProps = {
   children: React.ReactNode;
 };
 
@@ -14,8 +14,8 @@ export const metadata: Metadata = {
   description: "Jobs page description",
 };
 
-const FeedPreviewLayout: React.FC<FeedPreviewLayoutProps> = ({ children }) => {
+const JobsLayout: React.FC<JobsLayoutProps> = ({ children }) => {
   return <MainLayout>{children}</MainLayout>;
 };
 
-export default FeedPreviewLayout;
+export default JobsLayout;
