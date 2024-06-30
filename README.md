@@ -1,6 +1,6 @@
 ## Getting Started
 Vercel deployment (socket connection won't work here, run locally for that)
-[https://posts-126qrnek2-tmcrs19s-projects.vercel.app/](https://posts-qnstysmbq-tmcrs19s-projects.vercel.app/)
+https://posts-2hmc0o7u8-tmcrs19s-projects.vercel.app/
 
 How to run locally:
 
