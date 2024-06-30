@@ -18,7 +18,7 @@ const FeedPreviewLayout: React.FC<FeedPreviewLayoutProps> = ({ children }) => {
   return (
     <>
       <Header />
-      <main className="flex flex-col pb-20 md:flex-row flex-grow container pt-11 md:mr-0 md:w-5/6 md:ml-auto lg:w-2/4 lg:mx-auto">
+      <main className="flex flex-col pb-10 pt-11 md:pb-0 md:flex-row flex-grow container md:mr-0 md:w-5/6 md:ml-auto lg:w-2/4 lg:mx-auto">
         {children}
       </main>
       <Sidebar />

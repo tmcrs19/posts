@@ -8,40 +8,46 @@ import {
 import Link from "next/link";
 import {
   setCurrentPage,
-  setPostsAndUsers,
+  addNewPost,
   selectFeedData,
+  selectMappedPosts,
 } from "@faceit/store/slices/feed-preview";
 import socket from "@faceit/lib/socket";
 import { Spinner } from "@faceit/components/ui/Spinner";
 import { FeedSkeleton } from "./FeedSkeleton";
 import { FeedPost } from "./FeedPost";
+import { IFeedPost } from "@faceit/lib/server/feed-preview";
 
 export const Feed: React.FC = () => {
   const [isConnected, setIsConnected] = useState(socket.connected);
 
   const dispatch = useAppDispatch();
 
-  const { currentPage, feedPosts, hasMorePosts } =
-    useAppSelector(selectFeedData);
+  const { currentPage, hasMorePosts } = useAppSelector(selectFeedData);
+  const feedPosts = useAppSelector(selectMappedPosts);
 
   const [highlightedPostId, setHighlightedPostId] = useState<number | null>(
     null
   );
 
   const { data: users, isSuccess: usersSuccess } = useGetUsersQuery();
-  const {
-    error,
-    isLoading,
-    isFetching,
-    isSuccess: postsSuccess,
-  } = useGetPostsQuery(currentPage, {
+  const { error, isLoading, isFetching } = useGetPostsQuery(currentPage, {
     skip: !users,
   });
 
-  // https://github.com/mahmodghnaj/wrapping-socket-with-nextJs
-  // Potential reusable hook for handling socket connections
+  const handleNewPost = useCallback(
+    (newPost: IFeedPost) => {
+      dispatch(addNewPost(newPost));
+      setHighlightedPostId(newPost.id);
+      setTimeout(() => {
+        setHighlightedPostId(null);
+      }, 10000);
+    },
+    [dispatch]
+  );
+
   useEffect(() => {
-    if (usersSuccess && postsSuccess) {
+    if (usersSuccess) {
       const onConnect = () => {
         setIsConnected(true);
       };
@@ -53,26 +59,17 @@ export const Feed: React.FC = () => {
       socket.on("connect", onConnect);
       socket.on("disconnect", onDisconnect);
 
-      socket.on("newPost", (newPost) => {
-        dispatch(setPostsAndUsers({ posts: [newPost, ...feedPosts], users }));
-        setHighlightedPostId(newPost.id);
-        setTimeout(() => {
-          setHighlightedPostId(null);
-        }, 3000);
-      });
+      socket.on("newPost", handleNewPost);
 
       return () => {
         socket.off("connect", onConnect);
         socket.off("disconnect", onDisconnect);
-        socket.off("newPost");
+        socket.off("newPost", handleNewPost);
         socket.disconnect();
       };
     }
-  }, [dispatch, feedPosts, users, usersSuccess, postsSuccess]);
+  }, [handleNewPost, usersSuccess]);
 
-  // NOTE: this logic to maintain the scroll position shouldn't be necessary
-  // <Link scroll={false} /> should be enough to prevent the scroll position from resetting
-  // Perhaps this is a bug in Next.js or I'm missing something
   const handlePostClick = () => {
     sessionStorage.setItem("scrollPosition", window.scrollY.toString());
   };
