@@ -6,7 +6,7 @@ export default async function FeedPreviewPage() {
   return (
     <>
       <FeedAppBar />
-      <NotificationBar username="Theo"/>
+      <NotificationBar />
       <section className="container">
         <Feed />
       </section>
