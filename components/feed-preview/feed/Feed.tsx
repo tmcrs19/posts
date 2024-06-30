@@ -1,6 +1,5 @@
 "use client";
 import React, { useCallback, useRef, useEffect, useState } from "react";
-import { FeedPost } from "@faceit/components/feed-preview/feed-post";
 import { useAppDispatch, useAppSelector } from "@faceit/store/hooks";
 import {
   useGetPostsQuery,
@@ -15,6 +14,7 @@ import {
 import socket from "@faceit/lib/socket";
 import { Spinner } from "@faceit/components/ui/Spinner";
 import { FeedSkeleton } from "./FeedSkeleton";
+import { FeedPost } from "./FeedPost";
 
 export const Feed: React.FC = () => {
   const [isConnected, setIsConnected] = useState(socket.connected);
